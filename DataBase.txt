@@ -1,0 +1,28 @@
+-- Create the database if it doesn't exist
+CREATE DATABASE IF NOT EXISTS NormalizedDB;
+USE NormalizedDB;
+
+-- Drop old tables to avoid duplicates (optional but recommended for testing)
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS Customers;
+DROP TABLE IF EXISTS Products;
+
+-- Create Customers table
+CREATE TABLE Customers (
+    CustomerName VARCHAR(100) PRIMARY KEY
+);
+
+-- Create Products table
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(100) NOT NULL
+);
+
+-- Create Orders table
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerName VARCHAR(100),
+    ProductID INT,
+    FOREIGN KEY (CustomerName) REFERENCES Customers(CustomerName) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE ON UPDATE CASCADE
+);
